@@ -1,0 +1,25 @@
+
+# install ros on raspberry zero W
+sudo apt-get update
+sudo apt-get install -y build-essential gdebi
+wget https://github.com/nomumu/Kinetic4RPiZero/releases/download/v_2017-10-15/rpi-zerow-kinetic_1.0.0-1_armhf.zip
+unzip rpi-zerow-kinetic_1.0.0-1_armhf.zip
+rm rpi-zerow-kinetic_1.0.0-1_armhf.zip
+wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
+sudo gdebi rpi-zerow-kinetic_1.0.0-1_armhf.deb
+sudo /opt/ros/kinetic/initialize.sh
+
+
+# install raspicam node
+sudo apt-get install ros-kinetic-image-transport-plugins
+
+## Adding ARM libraries for interfacing to Raspberry Pi GPU
+$ git clone https://github.com/raspberrypi/userland.git /home/pi/userland
+
+## Install raspicam node
+$ mkdir -p ~/catkin_ws/src
+$ cd ~/catkin_ws/src
+$ git clone https://github.com/fpasteau/raspicam_node.git raspicam
+$ cd ~/catkin_ws
+$ catkin_make
+$ source devel/setup.bash
