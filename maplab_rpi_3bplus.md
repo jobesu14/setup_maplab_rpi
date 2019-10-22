@@ -48,7 +48,39 @@ Viewing the camera node
 rqt_image_view image:=/raspicam_node/camera/image/compressed
 ```
 
-## Install Maplab
+## Install Rovio
+
+Increase the swap size
+
+```
+sudo apt-get install dphys-swapfile
+free -h
+```
+
+```free -h``` should tell you the the swap size is 1.7G. If it is not the case, you can increase the swap file like that (not tested):
+
+```
+sudo nano /etc/dphys-swapfile
+CONF_SWAPSIZE=100 // Change to your preferred amount (Ie. 2048)
+sudo dphys-swapfile setup
+sudo /etc/init.d/dphys-swapfile stop
+sudo /etc/init.d/dphys-swapfile start
+```
+
+Create Rovio workspace and build it with one job to avoid overheating (that should take around 1h10).
+
+```
+mkdir -p rovio_ws/src
+cd rovio_ws/src
+git clone https://github.com/ANYbotics/kindr.git
+git clone https://github.com/ethz-asl/rovio.git
+cd rovio
+git submodule update --init --recursive
+cd ~/rovio_ws
+catkin build rovio -j1 --cmake-args -DCMAKE_BUILD_TYPE=Release
+```
+
+## Install Maplab (To test with catkin -j1 and swap file)
 
 ```
 sudo apt install autotools-dev ccache doxygen dh-autoreconf git liblapack-dev libblas-dev libgtest-dev libreadline-dev libssh2-1-dev pylint clang-format-3.8 python-autopep8 python-catkin-tools python-pip python-git python-setuptools python-termcolor python-wstool libatlas3-base --yes
