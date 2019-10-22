@@ -39,8 +39,11 @@ sudo apt install ros-kinetic-raspicam-node
 ```
 
 To launch the raspicam node: ```roslaunch raspicam_node camerav2_410x308_30fps.launch```
+
 The raspicam launch files are under: ```/opt/ros/kinetic/share/raspicam_node/launch```
+
 To view the video feed on a connected computer: ```rqt_image_view```
+
 Run the dynamic reconfigure node on a connected computer: ```rosrun rqt_reconfigure rqt_reconfigure```
 
 ## Install Rovio
