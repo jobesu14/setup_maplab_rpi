@@ -7,6 +7,26 @@ Don't forget to disable Ubiquity Robotics startup scripts
 
 ```sudo systemctl disable magni-base```
 
+## Few rpi setup (optional)
+
+Automatic NTPD to update system time (needed to use the Firefox)
+
+```
+sudo timedatectl set-ntp true
+sudo timedatectl set-timezone "Europe/Zurich"
+```
+
+Change the keyboard layout to swiss french, modify the two lines below and save the file.
+
+```
+sudo nano /etc/default/keyboard
+```
+
+```
+XKBLAYOUT="ch"
+XKBVARIANT="fr"
+```
+
 ## Install Raspicam node
 
 Instruction from [here](https://github.com/SamSpaulding/ros_raspberry_pi_zero)
@@ -23,21 +43,22 @@ sudo mkdir -p /home/pi/userland
 sudo git clone https://github.com/raspberrypi/userland.git /home/pi/userland/
 ```
 
-Create a vio workspace where we will build Raspicam node
+Create a raspicam workspace where we will build Raspicam node
 
 ```
-export CAM_WS=~/raspicam_ws
-mkdir -p $CAM_WS/src
-cd $CAM_WS/src
+mkdir -p raspicam_ws/src
+cd raspicam_ws/srcsudo timedatectl set-ntp true
+
 sudo git clone https://github.com/raspberrypi/userland.git /home/pi/userland/
-cd $CAM_WS/
+cd raspicam_ws
 catkin_make
-source devel/setup.bash
 ```
 
 Running the camera node (roscore should be already running)
 
 ```
+cd 
+source devel/setup.bash
 rosrun raspicam raspicam_node &
 rosservice call /camera/start_capture
 ```
@@ -55,6 +76,7 @@ Increase the swap size
 ```
 sudo apt-get install dphys-swapfile
 free -h
+source devel/setup.bash
 ```
 
 ```free -h``` should tell you the the swap size is 1.7G. If it is not the case, you can increase the swap file like that (not tested):
