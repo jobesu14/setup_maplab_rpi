@@ -27,47 +27,21 @@ XKBLAYOUT="ch"
 XKBVARIANT="fr"
 ```
 
-## Install Raspicam node
+## Install Raspicam Ubiquity
 
-Instruction from [here](https://github.com/SamSpaulding/ros_raspberry_pi_zero)
-([Maybe those instructions make more sense?](https://github.com/UbiquityRobotics/raspicam_node))
-
-Enable camera and I2C
-
-```sudo raspi-config```
-
-The raspicam node software below requires the following GPU interface code be checked out at the location /home/pi/userland, so we download this repository here:
+[Instruction and more information here](https://github.com/UbiquityRobotics/raspicam_node)
 
 ```
-sudo mkdir -p /home/pi/userland
-sudo git clone https://github.com/raspberrypi/userland.git /home/pi/userland/
+sudo sh -c 'echo "deb https://packages.ubiquityrobotics.com/ubuntu/ubiquity xenial main" > /etc/apt/sources.list.d/ubiquity-latest.list'
+sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key C3032ED8
+sudo apt-get update
+sudo apt install ros-kinetic-raspicam-node
 ```
 
-Create a raspicam workspace where we will build Raspicam node
-
-```
-mkdir -p raspicam_ws/src
-cd raspicam_ws/srcsudo timedatectl set-ntp true
-
-sudo git clone https://github.com/raspberrypi/userland.git /home/pi/userland/
-cd raspicam_ws
-catkin_make
-```
-
-Running the camera node (roscore should be already running)
-
-```
-cd 
-source devel/setup.bash
-rosrun raspicam raspicam_node &
-rosservice call /camera/start_capture
-```
-
-Viewing the camera node
-
-```
-rqt_image_view image:=/raspicam_node/camera/image/compressed
-```
+To launch the raspicam node: ```roslaunch raspicam_node camerav2_410x308_30fps.launch```
+The raspicam launch files are under: ```/opt/ros/kinetic/share/raspicam_node/launch```
+To view the video feed on a connected computer: ```rqt_image_view```
+Run the dynamic reconfigure node on a connected computer: ```rosrun rqt_reconfigure rqt_reconfigure```
 
 ## Install Rovio
 
@@ -130,4 +104,49 @@ cd $MAPLAB_WS/src/maplab
 ./tools/linter/init-git-hooks.py
 cd $MAPLAB_WS
 catkin build maplab
+```
+
+
+
+
+## Install Raspicam node (old)
+
+Instruction from [here](https://github.com/SamSpaulding/ros_raspberry_pi_zero)
+([Maybe those instructions make more sense?](https://github.com/UbiquityRobotics/raspicam_node))
+
+Enable camera and I2C
+
+```sudo raspi-config```
+
+The raspicam node software below requires the following GPU interface code be checked out at the location /home/pi/userland, so we download this repository here:
+
+```
+sudo mkdir -p /home/pi/userland
+sudo git clone https://github.com/raspberrypi/userland.git /home/pi/userland/
+```
+
+Create a raspicam workspace where we will build Raspicam node
+
+```
+mkdir -p raspicam_ws/src
+cd raspicam_ws/srcsudo timedatectl set-ntp true
+
+sudo git clone https://github.com/raspberrypi/userland.git /home/pi/userland/
+cd raspicam_ws
+catkin_make
+```
+
+Running the camera node (roscore should be already running)
+
+```
+cd 
+source devel/setup.bash
+rosrun raspicam raspicam_node &
+rosservice call /camera/start_capture
+```
+
+Viewing the camera node
+
+```
+rqt_image_view image:=/raspicam_node/camera/image/compressed
 ```
