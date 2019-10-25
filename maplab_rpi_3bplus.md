@@ -9,7 +9,8 @@ Don't forget to disable Ubiquity Robotics startup scripts
 
 ## Few rpi setup (optional)
 
-Automatic NTPD to update system time (needed to use the Firefox)
+Automatic NTPD to update system time (needed to use the Firefox).
+[More on NTP time sync on Linux](https://www.tecmint.com/synchronize-time-with-ntp-in-linux/)
 
 ```
 sudo timedatectl set-ntp true
