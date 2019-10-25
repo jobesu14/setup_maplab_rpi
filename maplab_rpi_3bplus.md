@@ -79,6 +79,20 @@ cd ~/rovio_ws
 catkin build rovio -j1 --cmake-args -DCMAKE_BUILD_TYPE=Release
 ```
 
+## Install IMU libraries
+
+Tested with the Adafruit (NXP Precision 9DoF IMU Breakout)[https://learn.adafruit.com/nxp-precision-9dof-breakout/overview].
+The (CPython code)[https://learn.adafruit.com/nxp-precision-9dof-breakout/python-circuitpython] to read the IMU data is also from Adafruit.
+To install it:
+
+```
+pip3 install --upgrade pip
+sudo python3 -m pip install adafruit-circuitpython-lis3dh
+sudo python3 -m pip install adafruit-circuitpython-fxos870
+sudo python3 -m pip install adafruit-circuitpython-fxas21002c
+```
+
+
 ## Install Maplab (To test with catkin -j1 and swap file)
 
 ```
